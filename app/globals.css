@@ -1,16 +1,47 @@
 @import "tailwindcss";
 
+/* ─── Dark theme (default) ─── */
 :root {
   --sv-bg: #0a0b0d;
+  --sv-bg-nav: rgba(10, 11, 13, 0.88);
   --sv-bg-card: #13151a;
   --sv-bg-card-hover: #1a1d24;
+  --sv-bg-mock-bar: rgba(19, 21, 26, 0.9);
+  --sv-bg-input: #1a1d24;
+  --sv-bg-mock-card: rgba(26, 29, 36, 0.7);
+  --sv-bg-code: #0d0e12;
   --sv-fg: #e4e5e9;
   --sv-fg-muted: #7c8091;
   --sv-fg-secondary: #a8acb8;
   --sv-accent: #5eead4;
   --sv-accent-2: #2dd4bf;
+  --sv-accent-glow: rgba(94, 234, 212, 0.28);
+  --sv-accent-glow-strong: rgba(94, 234, 212, 0.48);
   --sv-border: rgba(60, 65, 80, 0.3);
   --sv-border-strong: rgba(60, 65, 80, 0.5);
+  --sv-btn-text: #022c22;
+}
+
+/* ─── Light theme ─── */
+html.light {
+  --sv-bg: #f5f7fa;
+  --sv-bg-nav: rgba(245, 247, 250, 0.92);
+  --sv-bg-card: #ffffff;
+  --sv-bg-card-hover: #eef2f5;
+  --sv-bg-mock-bar: rgba(232, 235, 240, 0.95);
+  --sv-bg-input: #eef1f5;
+  --sv-bg-mock-card: rgba(240, 243, 248, 0.9);
+  --sv-bg-code: #f3f5f8;
+  --sv-fg: #111827;
+  --sv-fg-muted: #5c6370;
+  --sv-fg-secondary: #374151;
+  --sv-accent: #0d9488;
+  --sv-accent-2: #14b8a6;
+  --sv-accent-glow: rgba(13, 148, 136, 0.22);
+  --sv-accent-glow-strong: rgba(13, 148, 136, 0.40);
+  --sv-border: rgba(80, 100, 110, 0.18);
+  --sv-border-strong: rgba(80, 100, 110, 0.32);
+  --sv-btn-text: #022c22;
 }
 
 @theme inline {
@@ -26,4 +57,43 @@ body {
   background: var(--sv-bg);
   color: var(--sv-fg);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Gradient primary button ─── */
+@layer components {
+  .sv-btn-primary {
+    background-image: linear-gradient(120deg, #2dd4bf, #5eead4, #14b8a6, #2dd4bf);
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    background-color: transparent;
+    color: var(--sv-btn-text);
+    font-weight: 600;
+    transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 20px var(--sv-accent-glow);
+  }
+  .sv-btn-primary:hover {
+    background-position: 0% 0;
+    box-shadow: 0 0 36px var(--sv-accent-glow-strong), 0 4px 28px rgba(45, 212, 191, 0.22);
+    transform: translateY(-2px) scale(1.02);
+  }
+  .sv-btn-primary:active {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 20px var(--sv-accent-glow);
+  }
+
+  /* ─── Outlined ghost button ─── */
+  .sv-btn-outline {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  }
+  .sv-btn-outline:hover {
+    border-color: var(--sv-accent) !important;
+    box-shadow: 0 0 20px var(--sv-accent-glow);
+    transform: translateY(-2px) scale(1.02);
+    color: var(--sv-accent) !important;
+  }
+  .sv-btn-outline:active {
+    transform: translateY(0) scale(1);
+    box-shadow: none;
+  }
 }

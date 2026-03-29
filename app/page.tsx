@@ -1,3 +1,6 @@
+"use client";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+
 const GITHUB_GIT = 'https://github.com/alimon777/SkillVault-ext.git';
 const GITHUB = 'https://github.com/alimon777/SkillVault-ext';
 const MARKETPLACE = 'https://marketplace.visualstudio.com/items?itemName=alimon.skillvault';
@@ -8,7 +11,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Nav */}
-      <nav className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl border-b" style={{ background: "rgba(10,11,13,0.88)", borderColor: "var(--sv-border)" }}>
+      <nav className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl border-b" style={{ background: "var(--sv-bg-nav)", borderColor: "var(--sv-border)" }}>
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-14">
           <div className="flex items-center gap-2.5">
             <span className="text-lg">🔐</span>
@@ -18,12 +21,12 @@ export default function Home() {
             <a href="#features" className="text-sm hidden sm:block" style={{ color: "var(--sv-fg-secondary)" }}>Features</a>
             <a href="#how-it-works" className="text-sm hidden sm:block" style={{ color: "var(--sv-fg-secondary)" }}>How it Works</a>
             <a href="#install" className="text-sm hidden sm:block" style={{ color: "var(--sv-fg-secondary)" }}>Install</a>
+            <ThemeToggle />
             <a
               href={GITHUB_GIT}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium transition-all"
-              style={{ background: "var(--sv-accent)", color: "#022c22" }}
+              className="sv-btn-primary flex items-center gap-2 py-2 px-4 rounded-lg text-sm font-medium"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
               GitHub
@@ -51,14 +54,13 @@ export default function Home() {
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <a
               href={MARKETPLACE}
-              className="py-3 px-8 rounded-lg text-base font-semibold transition-all hover:scale-[1.03]"
-              style={{ background: "var(--sv-accent)", color: "#022c22" }}
+              className="sv-btn-primary py-3 px-8 rounded-lg text-base"
             >
               Install Extension
             </a>
             <a
               href="#how-it-works"
-              className="py-3 px-8 rounded-lg text-base font-medium border transition-all hover:border-[var(--sv-accent)]"
+              className="sv-btn-outline py-3 px-8 rounded-lg text-base font-medium border"
               style={{ borderColor: "var(--sv-border-strong)", color: "var(--sv-fg-secondary)" }}
             >
               See How It Works
@@ -72,7 +74,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto">
           <div className="rounded-xl border overflow-hidden" style={{ background: "var(--sv-bg-card)", borderColor: "var(--sv-border)" }}>
             {/* Title bar */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b" style={{ borderColor: "var(--sv-border)", background: "rgba(19,21,26,0.8)" }}>
+            <div className="flex items-center gap-2 px-4 py-3 border-b" style={{ borderColor: "var(--sv-border)", background: "var(--sv-bg-mock-bar)" }}>
               <div className="flex gap-1.5">
                 <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
                 <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
@@ -94,7 +96,7 @@ export default function Home() {
                 placeholder="Search skills..."
                 readOnly
                 className="w-full py-1.5 px-3 rounded text-xs mb-3 border outline-none"
-                style={{ background: "#1a1d24", borderColor: "var(--sv-border)", color: "var(--sv-fg-muted)" }}
+                style={{ background: "var(--sv-bg-input)", borderColor: "var(--sv-border)", color: "var(--sv-fg-muted)" }}
               />
               {/* Skill cards mock */}
               {[
@@ -102,7 +104,7 @@ export default function Home() {
                 { name: "Python Type Hints", tags: ["python", "mypy"], ai: "claude" },
                 { name: "API Error Handling", tags: ["fastapi", "rest"], ai: "cursor" },
               ].map((s) => (
-                <div key={s.name} className="rounded-lg border p-3 mb-2 transition-colors" style={{ background: "rgba(26,29,36,0.6)", borderColor: "var(--sv-border)" }}>
+                <div key={s.name} className="rounded-lg border p-3 mb-2 transition-colors" style={{ background: "var(--sv-bg-mock-card)", borderColor: "var(--sv-border)" }}>
                   <div className="font-semibold text-xs mb-1.5">{s.name}</div>
                   <div className="flex gap-1.5 mb-2">
                     {s.tags.map((t) => (
@@ -204,10 +206,10 @@ export default function Home() {
             <p className="mt-4 text-base" style={{ color: "var(--sv-fg-secondary)" }}>Skills are markdown files with YAML frontmatter. No proprietary format.</p>
           </div>
           <div className="rounded-xl border overflow-hidden" style={{ borderColor: "var(--sv-border)" }}>
-            <div className="px-4 py-2 border-b text-xs font-mono" style={{ background: "rgba(19,21,26,0.8)", borderColor: "var(--sv-border)", color: "var(--sv-fg-muted)" }}>
+            <div className="px-4 py-2 border-b text-xs font-mono" style={{ background: "var(--sv-bg-mock-bar)", borderColor: "var(--sv-border)", color: "var(--sv-fg-muted)" }}>
               by-tech/react/component-patterns.md
             </div>
-            <pre className="p-6 text-sm leading-relaxed overflow-x-auto" style={{ background: "#0d0e12", color: "var(--sv-fg-secondary)" }}>
+            <pre className="p-6 text-sm leading-relaxed overflow-x-auto" style={{ background: "var(--sv-bg-code)", color: "var(--sv-fg-secondary)" }}>
 {`---
 name: "React component patterns"
 tech: [react, typescript]
@@ -241,8 +243,7 @@ When writing React components:
               href="https://marketplace.visualstudio.com/items?itemName=alimon.skillvault"
               target="_blank"
               rel="noopener noreferrer"
-              className="py-3 px-8 rounded-lg text-base font-semibold transition-all hover:scale-[1.03]"
-              style={{ background: "var(--sv-accent)", color: "#022c22" }}
+              className="sv-btn-primary py-3 px-8 rounded-lg text-base"
             >
               Install from Marketplace
             </a>
@@ -250,7 +251,7 @@ When writing React components:
               href={GITHUB_GIT}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-3 px-8 rounded-lg text-base font-medium border transition-all hover:border-[var(--sv-accent)]"
+              className="sv-btn-outline py-3 px-8 rounded-lg text-base font-medium border"
               style={{ borderColor: "var(--sv-border-strong)", color: "var(--sv-fg-secondary)" }}
             >
               View on GitHub
