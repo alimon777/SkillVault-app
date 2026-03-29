@@ -1,5 +1,6 @@
 "use client";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useState } from "react";
 
 const GITHUB_GIT = 'https://github.com/alimon777/SkillVault-ext.git';
 const GITHUB = 'https://github.com/alimon777/SkillVault-ext';
@@ -8,6 +9,8 @@ const EXTENSION_ID = 'alimonna.SkillVault';
 const INSTALL_CMD = `code --install-extension ${EXTENSION_ID}`;
 
 export default function Home() {
+  const [copied, setCopied] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Nav */}
@@ -297,9 +300,35 @@ When writing React components:
           </div>
 
           {/* Quick install command */}
-            <div className="inline-flex items-center gap-3 py-3 px-6 rounded-lg border font-mono text-sm" style={{ background: "var(--sv-bg-card)", borderColor: "var(--sv-border)", color: "var(--sv-fg-secondary)" }}>
+          <div className="inline-flex items-center gap-3 py-3 px-4 rounded-lg border font-mono text-sm" style={{ background: "var(--sv-bg-card)", borderColor: "var(--sv-border)", color: "var(--sv-fg-secondary)" }}>
             <span style={{ color: "var(--sv-fg-muted)" }}>$</span>
-            <code>{INSTALL_CMD}</code>
+            <code className="select-all">{INSTALL_CMD}</code>
+            <button
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(INSTALL_CMD);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                } catch (e) {
+                  const ta = document.createElement('textarea');
+                  ta.value = INSTALL_CMD;
+                  document.body.appendChild(ta);
+                  ta.select();
+                  try { document.execCommand('copy'); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+                  ta.remove();
+                }
+              }}
+              aria-label={copied ? "Install command copied" : "Copy install command"}
+              title={copied ? "Copied" : "Copy"}
+              className="ml-2 inline-flex items-center justify-center p-1 rounded text-xs border"
+              style={{ borderColor: "var(--sv-border)", color: "var(--sv-fg-secondary)", background: "transparent", width: 34, height: 30 }}
+            >
+              {copied ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: "#16a34a" }}><path d="M20 6L9 17l-5-5"/></svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              )}
+            </button>
           </div>
         </div>
       </section>
