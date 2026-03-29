@@ -3,8 +3,8 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const GITHUB_GIT = 'https://github.com/alimon777/SkillVault-ext.git';
 const GITHUB = 'https://github.com/alimon777/SkillVault-ext';
-const MARKETPLACE = 'https://marketplace.visualstudio.com/items?itemName=alimon.skillvault';
-const EXTENSION_ID = 'alimon.skillvault';
+const MARKETPLACE = 'vscode:extension/alimonna.SkillVault';
+const EXTENSION_ID = 'alimonna.SkillVault';
 const INSTALL_CMD = `code --install-extension ${EXTENSION_ID}`;
 
 export default function Home() {
@@ -14,7 +14,6 @@ export default function Home() {
       <nav className="fixed inset-x-0 top-0 z-50 backdrop-blur-xl border-b" style={{ background: "var(--sv-bg-nav)", borderColor: "var(--sv-border)" }}>
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-14">
           <div className="flex items-center gap-2.5">
-            <span className="text-lg">🔐</span>
             <span className="font-bold text-lg" style={{ color: "var(--sv-accent)" }}>SkillVault</span>
           </div>
           <div className="flex items-center gap-6">
@@ -49,7 +48,7 @@ export default function Home() {
           </h1>
           <p className="text-lg max-w-xl mx-auto mb-10 leading-relaxed" style={{ color: "var(--sv-fg-secondary)" }}>
             Turn your GitHub repo into a structured library of AI instruction skills.
-            Browse, apply, and share — without leaving your editor.
+            Browse, apply, and manage — from the sidebar or through Copilot Chat with built-in MCP tools.
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <a
@@ -140,7 +139,7 @@ export default function Home() {
               { icon: "🔍", title: "Auto-Detect IDE", desc: "Copilot, Cursor, Claude Code, Windsurf, Cline — SkillVault detects your tool and writes to the correct file." },
               { icon: "🔗", title: "Git-Backed", desc: "Skills live in your GitHub repo with full version history. No proprietary storage, no lock-in." },
               { icon: "📦", title: "No Cloning", desc: "Fetches files on demand via GitHub API. Your extension stays lightweight — no local git state to manage." },
-              { icon: "🌐", title: "Source Imports", desc: "Pull skills from any public repo. Track updates with SHA-based lockfiles, just like package-lock.json." },
+              { icon: "🤖", title: "MCP Chat Tools", desc: "11 language-model tools let you search, apply, create, and manage skills directly from Copilot Chat — no clicks needed." },
               { icon: "🔒", title: "Open Source (AGPL-3.0)", desc: "Free to use, fork, and contribute. Copyleft protects the ecosystem from closed-source exploitation." },
             ].map((f) => (
               <div key={f.title} className="rounded-xl border p-6 transition-colors hover:border-[var(--sv-accent)]" style={{ background: "var(--sv-bg-card)", borderColor: "var(--sv-border)" }}>
@@ -150,6 +149,45 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* MCP Tools */}
+      <section className="py-24 px-6" style={{ background: "var(--sv-bg-card)" }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="font-mono text-xs tracking-widest uppercase mb-3 block" style={{ color: "var(--sv-accent)" }}>AI Integration</span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Talk to your vault.</h2>
+            <p className="mt-4 text-base max-w-xl mx-auto" style={{ color: "var(--sv-fg-secondary)" }}>
+              SkillVault exposes an MCP server with 11 tools — use them in Copilot Chat, Agent mode, or any compatible AI client.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { cmd: "#skillvault_search_skills", label: "Search skills by name, tag, or tech" },
+              { cmd: "#skillvault_list_skills", label: "List all skills in your repo" },
+              { cmd: "#skillvault_get_skill", label: "Fetch full content of a skill" },
+              { cmd: "#skillvault_apply_skill", label: "Apply a skill to your workspace" },
+              { cmd: "#skillvault_remove_applied", label: "Remove an applied skill" },
+              { cmd: "#skillvault_list_applied", label: "Show active skills" },
+              { cmd: "#skillvault_create_skill", label: "Create a new skill in your repo" },
+              { cmd: "#skillvault_update_skill", label: "Update an existing skill" },
+              { cmd: "#skillvault_delete_skill", label: "Delete a skill from your repo" },
+              { cmd: "#skillvault_toggle_favorite", label: "Pin or unpin a favorite" },
+              { cmd: "#skillvault_refresh_skills", label: "Refresh manifest from GitHub" },
+            ].map((t) => (
+              <div key={t.cmd} className="flex items-start gap-3 rounded-lg border p-4" style={{ background: "var(--sv-bg-mock-card)", borderColor: "var(--sv-border)" }}>
+                <span className="shrink-0 mt-0.5 font-mono text-xs py-0.5 px-2 rounded" style={{ background: "rgba(94,234,212,0.12)", color: "var(--sv-accent)" }}>#</span>
+                <div>
+                  <code className="text-xs font-semibold block mb-1">{t.cmd.replace("#", "")}</code>
+                  <span className="text-xs" style={{ color: "var(--sv-fg-muted)" }}>{t.label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-xs mt-8" style={{ color: "var(--sv-fg-muted)" }}>
+            All write operations require explicit user confirmation — human-in-the-loop by design.
+          </p>
         </div>
       </section>
 
@@ -163,8 +201,8 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
             {[
               { step: "01", title: "Connect", desc: "Install the extension, authenticate with GitHub, and point to your skills repo." },
-              { step: "02", title: "Browse", desc: "Your skills appear in the sidebar — searchable, tagged by tech stack and AI tool." },
-              { step: "03", title: "Apply", desc: "Click a skill. It's written to the correct instruction file in your workspace. Done." },
+              { step: "02", title: "Browse", desc: "Your skills appear in the sidebar — searchable, tagged by tech stack and AI tool. Or ask Copilot Chat to find them." },
+              { step: "03", title: "Apply", desc: "Click Apply in the sidebar or tell your AI assistant — the right instruction file is written to your workspace. Done." },
             ].map((s) => (
               <div key={s.step} className="text-center sm:text-left">
                 <span className="font-mono text-4xl font-bold block mb-4" style={{ color: "var(--sv-accent)" }}>{s.step}</span>
@@ -240,12 +278,12 @@ When writing React components:
           </p>
           <div className="flex items-center justify-center gap-4 flex-wrap mb-10">
             <a
-              href="https://marketplace.visualstudio.com/items?itemName=alimon.skillvault"
+              href={MARKETPLACE}
               target="_blank"
               rel="noopener noreferrer"
               className="sv-btn-primary py-3 px-8 rounded-lg text-base"
             >
-              Install from Marketplace
+              Install Extension
             </a>
             <a
               href={GITHUB_GIT}
